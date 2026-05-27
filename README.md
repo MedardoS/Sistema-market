@@ -1,17 +1,67 @@
-# React + Vite
+# 🛍️ UrbanStyle Market
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Marketplace de ropa urbana desarrollado con React y Vite como parte del Hito 2 del proyecto Marketplace de Desafío Latam.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+# 🌐 Demo
 
-## React Compiler
+https://medardos.github.io/Sistema-market/
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+# 🚀 Tecnologías Utilizadas
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# Sistema-market
+- React
+- Vite
+- React Router DOM
+- Context API
+- JavaScript
+- CSS3
+
+---
+
+# 🎨 Características
+
+✅ Navegación entre rutas con React Router  
+✅ Componentes reutilizables  
+✅ Context API para manejo global del estado  
+✅ Diseño moderno y responsive  
+✅ Rutas protegidas  
+✅ Galería dinámica de productos  
+✅ Arquitectura organizada  
+✅ Deploy en GitHub Pages
+
+---
+
+# 📁 Estructura del Proyecto
+
+```bash
+src/
+│
+├── assets/
+├── components/
+│   ├── Navbar.jsx
+│   ├── Footer.jsx
+│   ├── ProductCard.jsx
+│   └── ProtectedRoute.jsx
+│
+├── context/
+│   ├── UserContext.jsx
+│   └── UserProvider.jsx
+│
+├── pages/
+│   ├── Home.jsx
+│   ├── Login.jsx
+│   ├── Register.jsx
+│   ├── Gallery.jsx
+│   ├── Profile.jsx
+│   ├── ProductDetail.jsx
+│   └── CreateProduct.jsx
+│
+├── router/
+│   └── AppRouter.jsx
+│
+├── App.jsx
+├── main.jsx
+└── index.css
