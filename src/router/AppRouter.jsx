@@ -1,5 +1,5 @@
 import {
-  BrowserRouter,
+  HashRouter,
   Routes,
   Route,
 } from "react-router-dom";
@@ -16,10 +16,8 @@ import ProtectedRoute from "../components/ProtectedRoute";
 
 const AppRouter = () => {
   return (
-    <BrowserRouter basename="/Sistema-market">
+    <HashRouter>
       <Routes>
-
-        {/* RUTAS PUBLICAS */}
 
         <Route path="/" element={<Home />} />
 
@@ -33,10 +31,6 @@ const AppRouter = () => {
           path="/product/:id"
           element={<ProductDetail />}
         />
-
-
-
-        {/* RUTAS PRIVADAS */}
 
         <Route
           path="/profile"
@@ -57,7 +51,7 @@ const AppRouter = () => {
         />
 
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
