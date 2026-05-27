@@ -1,11 +1,9 @@
 {
   "homepage": "https://medardos.github.io/Sistema-market",
-
   "name": "urbanstyle-market",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -14,13 +12,11 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
-
   "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.0.0"
+    "react-router-dom": "^6.30.3"
   },
-
   "devDependencies": {
     "@eslint/js": "^9.0.0",
     "@types/react": "^19.0.0",
