@@ -1,6 +1,56 @@
+import { useState } from "react";
 import Navbar from "../components/Navbar";
 
 const Login = () => {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] =
+    useState("");
+
+  const handleLogin = async (e) => {
+
+    e.preventDefault();
+
+    try {
+
+      const response = await fetch(
+        "https://sistema-market-backend.onrender.com/api/users/login",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
+
+      const data =
+        await response.json();
+
+      console.log(data);
+
+      localStorage.setItem(
+        "token",
+        data.token
+      );
+
+      alert("Login exitoso 😎");
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Error login");
+
+    }
+  };
+
   return (
     <div
       style={{
@@ -20,6 +70,7 @@ const Login = () => {
         }}
       >
         <form
+          onSubmit={handleLogin}
           style={{
             backgroundColor: "#1e1e1e",
             padding: "40px",
@@ -36,12 +87,18 @@ const Login = () => {
             type="email"
             placeholder="Email"
             style={inputStyle}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
           />
 
           <input
             type="password"
             placeholder="Password"
             style={inputStyle}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
           />
 
           <button style={buttonStyle}>

@@ -1,6 +1,52 @@
+import { useState } from "react";
 import Navbar from "../components/Navbar";
 
 const Register = () => {
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] =
+    useState("");
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    try {
+
+      const response = await fetch(
+        "https://sistema-market-backend.onrender.com/api/users/register",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+          }),
+        }
+      );
+
+      const data =
+        await response.json();
+
+      console.log(data);
+
+      alert("Usuario registrado 😎");
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Error al registrar");
+
+    }
+  };
+
   return (
     <div
       style={{
@@ -20,6 +66,7 @@ const Register = () => {
         }}
       >
         <form
+          onSubmit={handleRegister}
           style={{
             backgroundColor: "#1e1e1e",
             padding: "40px",
@@ -36,18 +83,27 @@ const Register = () => {
             type="text"
             placeholder="Nombre"
             style={inputStyle}
+            onChange={(e) =>
+              setName(e.target.value)
+            }
           />
 
           <input
             type="email"
             placeholder="Email"
             style={inputStyle}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
           />
 
           <input
             type="password"
             placeholder="Password"
             style={inputStyle}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
           />
 
           <button style={buttonStyle}>
