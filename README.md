@@ -1,67 +1,35 @@
-# 🛍️ UrbanStyle Market
+## 🌐 Deploy
 
-Marketplace de ropa urbana desarrollado con React y Vite como parte del Hito 2 del proyecto Marketplace de Desafío Latam.
+### Frontend
 
----
+[Sistema Market Frontend](https://medardos.github.io/Sistema-market/?utm_source=chatgpt.com)
 
-# 🌐 Demo
+### Backend
 
-https://medardos.github.io/Sistema-market/
-
----
-
-# 🚀 Tecnologías Utilizadas
-
-- React
-- Vite
-- React Router DOM
-- Context API
-- JavaScript
-- CSS3
+[Sistema Market Backend](https://sistema-market-backend.onrender.com?utm_source=chatgpt.com)
 
 ---
 
-# 🎨 Características
+## 🚀 Tecnologías utilizadas
 
-✅ Navegación entre rutas con React Router  
-✅ Componentes reutilizables  
-✅ Context API para manejo global del estado  
-✅ Diseño moderno y responsive  
-✅ Rutas protegidas  
-✅ Galería dinámica de productos  
-✅ Arquitectura organizada  
-✅ Deploy en GitHub Pages
+### Frontend
+
+* React
+* Vite
+* React Router DOM
+
+### Backend
+
+* Node.js
+* Express
+* PostgreSQL
+* JWT
+* bcrypt
+* Jest
+* Supertest
 
 ---
 
-# 📁 Estructura del Proyecto
+## 📚 Descripción
 
-```bash
-src/
-│
-├── assets/
-├── components/
-│   ├── Navbar.jsx
-│   ├── Footer.jsx
-│   ├── ProductCard.jsx
-│   └── ProtectedRoute.jsx
-│
-├── context/
-│   ├── UserContext.jsx
-│   └── UserProvider.jsx
-│
-├── pages/
-│   ├── Home.jsx
-│   ├── Login.jsx
-│   ├── Register.jsx
-│   ├── Gallery.jsx
-│   ├── Profile.jsx
-│   ├── ProductDetail.jsx
-│   └── CreateProduct.jsx
-│
-├── router/
-│   └── AppRouter.jsx
-│
-├── App.jsx
-├── main.jsx
-└── index.css
+Sistema Market es un proyecto Full Stack tipo e-commerce desarrollado con React y Node.js. Incluye autenticación con JWT, rutas protegidas, conexión a PostgreSQL y despliegue completo en la nube usando GitHub Pages, Render y Neon.
