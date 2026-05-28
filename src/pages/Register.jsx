@@ -37,6 +37,7 @@ const Register = () => {
       console.log(data);
 
       alert("Usuario registrado 😎");
+      window.location.href = "/#/login";
 
     } catch (error) {
 

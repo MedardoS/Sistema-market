@@ -41,6 +41,7 @@ const Login = () => {
       );
 
       alert("Login exitoso 😎");
+      window.location.href = "/#/profile";
 
     } catch (error) {
 
