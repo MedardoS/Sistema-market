@@ -61,64 +61,62 @@ const ProductDetail = () => {
 
   }
 
-  const handleBuy = () => {
+ const handleBuy = () => {
 
-    const token =
-      localStorage.getItem(
-        "token"
+  const token =
+    localStorage.getItem(
+      "token"
+    );
+
+  if (!token) {
+
+    const register =
+      window.confirm(
+        "Debes iniciar sesión para comprar. ¿Deseas registrarte?"
       );
 
-    if (!token) {
+    if (register) {
 
-      const register =
-        window.confirm(
-          "Debes iniciar sesión para comprar. ¿Deseas registrarte?"
-        );
+      navigate("/register");
 
-      if (register) {
+    } else {
 
-        window.location.href =
-          "/#/register";
+      navigate("/login");
 
-      } else {
-
-        window.location.href =
-          "/#/login";
-
-      }
-
-      return;
     }
 
-    const cartItem = {
-      title:
-        product.title,
-      price:
-        product.price,
-      size,
-    };
+    return;
+  }
 
-    const cart =
-      JSON.parse(
-        localStorage.getItem(
-          "cart"
-        )
-      ) || [];
-
-    cart.push(cartItem);
-
-    localStorage.setItem(
-      "cart",
-      JSON.stringify(cart)
-    );
-
-    alert(
-      "Producto agregado al carrito 🛒"
-    );
-
-    window.location.href =
-      "/#/cart";
+  const cartItem = {
+    title:
+      product.title,
+    price:
+      product.price,
+    size,
   };
+
+  const cart =
+    JSON.parse(
+      localStorage.getItem(
+        "cart"
+      )
+    ) || [];
+
+  cart.push(cartItem);
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+
+  alert(
+    "Producto agregado al carrito 🛒"
+  );
+
+  navigate("/cart");
+
+};
 
   return (
     <div
