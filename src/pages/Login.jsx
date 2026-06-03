@@ -1,9 +1,12 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
+import { API_URL } from "../config/api";
 
 const Login = () => {
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] =
+    useState("");
+
   const [password, setPassword] =
     useState("");
 
@@ -13,43 +16,57 @@ const Login = () => {
 
     try {
 
-      const response = await fetch(
-        "https://sistema-market-backend.onrender.com/api/users/login",
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        }
-      );
+      const response =
+        await fetch(
+          `${API_URL}/api/users/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+            body: JSON.stringify({
+              email,
+              password,
+            }),
+          }
+        );
 
       const data =
         await response.json();
 
-      console.log(data);
+      if (!response.ok) {
+
+        alert(
+          data.error ||
+          "Error login"
+        );
+
+        return;
+      }
 
       localStorage.setItem(
         "token",
         data.token
       );
 
-      alert("Login exitoso 😎");
-      window.location.href = "/#/profile";
+      alert(
+        "Login exitoso 😎"
+      );
+
+      window.location.href =
+        "/#/profile";
 
     } catch (error) {
 
       console.log(error);
 
-      alert("Error login");
+      alert(
+        "Error login"
+      );
 
     }
+
   };
 
   return (
@@ -73,12 +90,15 @@ const Login = () => {
         <form
           onSubmit={handleLogin}
           style={{
-            backgroundColor: "#1e1e1e",
+            backgroundColor:
+              "#1e1e1e",
             padding: "40px",
-            borderRadius: "15px",
+            borderRadius:
+              "15px",
             width: "350px",
             display: "flex",
-            flexDirection: "column",
+            flexDirection:
+              "column",
             gap: "20px",
           }}
         >
@@ -89,7 +109,9 @@ const Login = () => {
             placeholder="Email"
             style={inputStyle}
             onChange={(e) =>
-              setEmail(e.target.value)
+              setEmail(
+                e.target.value
+              )
             }
           />
 
@@ -98,13 +120,18 @@ const Login = () => {
             placeholder="Password"
             style={inputStyle}
             onChange={(e) =>
-              setPassword(e.target.value)
+              setPassword(
+                e.target.value
+              )
             }
           />
 
-          <button style={buttonStyle}>
+          <button
+            style={buttonStyle}
+          >
             Ingresar
           </button>
+
         </form>
       </div>
     </div>

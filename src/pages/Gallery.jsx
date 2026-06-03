@@ -5,24 +5,27 @@ const Gallery = () => {
   const products = [
     {
       id: 1,
-      title: "Chaqueta Oversize",
-      price: 25000,
-      image:
-        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
+      title: "Polera Oversize Negra",
+      price: 19990,
+      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
     },
     {
       id: 2,
-      title: "Hoodie Streetwear",
-      price: 30000,
-      image:
-        "https://images.unsplash.com/photo-1503341504253-dff4815485f1",
+      title: "Chaqueta Urban Style",
+      price: 34990,
+      image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f",
     },
     {
       id: 3,
-      title: "Pantalón Cargo",
-      price: 20000,
-      image:
-        "https://images.unsplash.com/photo-1512436991641-6745cdb1723f",
+      title: "Jeans Slim Fit",
+      price: 24990,
+      image: "https://images.unsplash.com/photo-1542272604-787c3835535d",
+    },
+    {
+      id: 4,
+      title: "Zapatillas Urban",
+      price: 45990,
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
     },
   ];
 
@@ -31,6 +34,7 @@ const Gallery = () => {
       style={{
         minHeight: "100vh",
         backgroundColor: "#111",
+        color: "white",
       }}
     >
       <Navbar />
@@ -38,20 +42,35 @@ const Gallery = () => {
       <div
         style={{
           padding: "40px",
-          display: "flex",
-          gap: "30px",
-          flexWrap: "wrap",
-          justifyContent: "center",
         }}
       >
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            image={product.image}
-            title={product.title}
-            price={product.price}
-          />
-        ))}
+        <h1
+          style={{
+            textAlign: "center",
+            marginBottom: "30px",
+          }}
+        >
+          Galería de Productos
+        </h1>
+
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: "20px",
+          }}
+        >
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              image={product.image}
+              title={product.title}
+              price={product.price}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

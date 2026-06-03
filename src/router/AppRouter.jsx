@@ -1,8 +1,4 @@
-import {
-  HashRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -11,6 +7,8 @@ import Profile from "../pages/Profile";
 import Gallery from "../pages/Gallery";
 import ProductDetail from "../pages/ProductDetail";
 import CreateProduct from "../pages/CreateProduct";
+import Cart from "../pages/Cart";
+import Orders from "../pages/Orders";
 
 import ProtectedRoute from "../components/ProtectedRoute";
 
@@ -18,7 +16,6 @@ const AppRouter = () => {
   return (
     <HashRouter>
       <Routes>
-
         <Route path="/" element={<Home />} />
 
         <Route path="/login" element={<Login />} />
@@ -27,10 +24,7 @@ const AppRouter = () => {
 
         <Route path="/gallery" element={<Gallery />} />
 
-        <Route
-          path="/product/:id"
-          element={<ProductDetail />}
-        />
+        <Route path="/product/:id" element={<ProductDetail />} />
 
         <Route
           path="/profile"
@@ -50,6 +44,23 @@ const AppRouter = () => {
           }
         />
 
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute>
+              <Orders />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </HashRouter>
   );

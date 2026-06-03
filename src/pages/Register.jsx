@@ -1,50 +1,41 @@
+import { API_URL } from "../config/api";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 
 const Register = () => {
-
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] =
-    useState("");
+  const [password, setPassword] = useState("");
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
     try {
+      const response = await fetch(`${API_URL}/api/users/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          email,
+          password,
+        }),
+      });
 
-      const response = await fetch(
-        "https://sistema-market-backend.onrender.com/api/users/register",
-        {
-          method: "POST",
+      const data = await response.json();
 
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-
-          body: JSON.stringify({
-            name,
-            email,
-            password,
-          }),
-        }
-      );
-
-      const data =
-        await response.json();
-
-      console.log(data);
-
-      alert("Usuario registrado 😎");
-      window.location.href = "/#/login";
-
+      if (response.ok) {
+        alert("Usuario registrado 😎");
+        window.location.href = "/#/login";
+      } else {
+        alert(data.error || "Error al registrar");
+      }
     } catch (error) {
-
       console.log(error);
-
       alert("Error al registrar");
-
     }
   };
 
@@ -84,32 +75,31 @@ const Register = () => {
             type="text"
             placeholder="Nombre"
             style={inputStyle}
-            onChange={(e) =>
-              setName(e.target.value)
-            }
+            onChange={(e) => setName(e.target.value)}
+          />
+
+          <input
+            type="text"
+            placeholder="Teléfono"
+            style={inputStyle}
+            onChange={(e) => setPhone(e.target.value)}
           />
 
           <input
             type="email"
             placeholder="Email"
             style={inputStyle}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <input
             type="password"
             placeholder="Password"
             style={inputStyle}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
+            onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button style={buttonStyle}>
-            Crear cuenta
-          </button>
+          <button style={buttonStyle}>Crear cuenta</button>
         </form>
       </div>
     </div>

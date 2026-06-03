@@ -1,9 +1,22 @@
-const ProductCard = ({ image, title, price }) => {
+import { useNavigate } from "react-router-dom";
+
+const ProductCard = ({
+  id,
+  image,
+  title,
+  price,
+}) => {
+
+  const navigate =
+    useNavigate();
+
   return (
     <div
       style={{
-        backgroundColor: "#1e1e1e",
-        borderRadius: "15px",
+        backgroundColor:
+          "#1e1e1e",
+        borderRadius:
+          "15px",
         overflow: "hidden",
         width: "300px",
         color: "white",
@@ -19,28 +32,41 @@ const ProductCard = ({ image, title, price }) => {
         }}
       />
 
-      <div style={{ padding: "20px" }}>
+      <div
+        style={{
+          padding: "20px",
+        }}
+      >
         <h2>{title}</h2>
 
         <p
           style={{
             marginTop: "10px",
             color: "#ff6600",
-            fontWeight: "bold",
+            fontWeight:
+              "bold",
           }}
         >
-          ${price}
+          $
+          {price.toLocaleString()}
         </p>
 
         <button
+          onClick={() =>
+            navigate(
+              `/product/${id}`
+            )
+          }
           style={{
             marginTop: "15px",
             width: "100%",
             padding: "12px",
             border: "none",
-            backgroundColor: "#ff6600",
+            backgroundColor:
+              "#ff6600",
             color: "white",
-            borderRadius: "10px",
+            borderRadius:
+              "10px",
             cursor: "pointer",
           }}
         >

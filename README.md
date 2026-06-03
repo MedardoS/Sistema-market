@@ -2,11 +2,11 @@
 
 ### Frontend
 
-[Sistema Market Frontend](https://medardos.github.io/Sistema-market/?utm_source=chatgpt.com)
+[Sistema Market Frontend](https://medardos.github.io/Sistema-market/)
 
 ### Backend
 
-[Sistema Market Backend](https://sistema-market-backend.onrender.com?utm_source=chatgpt.com)
+[Sistema Market Backend](https://sistema-market-backend.onrender.com)
 
 ---
 
