@@ -1,11 +1,19 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+
+import {
+  useParams,
+  useNavigate,
+} from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 
 const ProductDetail = () => {
 
   const { id } =
     useParams();
+
+  const navigate =
+    useNavigate();
 
   const [size, setSize] =
     useState("M");
@@ -61,62 +69,62 @@ const ProductDetail = () => {
 
   }
 
- const handleBuy = () => {
+  const handleBuy = () => {
 
-  const token =
-    localStorage.getItem(
-      "token"
-    );
-
-  if (!token) {
-
-    const register =
-      window.confirm(
-        "Debes iniciar sesión para comprar. ¿Deseas registrarte?"
+    const token =
+      localStorage.getItem(
+        "token"
       );
 
-    if (register) {
+    if (!token) {
 
-      navigate("/register");
+      const register =
+        window.confirm(
+          "Debes iniciar sesión para comprar. ¿Deseas registrarte?"
+        );
 
-    } else {
+      if (register) {
 
-      navigate("/login");
+        navigate("/register");
 
+      } else {
+
+        navigate("/login");
+
+      }
+
+      return;
     }
 
-    return;
-  }
+    const cartItem = {
+      title:
+        product.title,
+      price:
+        product.price,
+      size,
+    };
 
-  const cartItem = {
-    title:
-      product.title,
-    price:
-      product.price,
-    size,
+    const cart =
+      JSON.parse(
+        localStorage.getItem(
+          "cart"
+        )
+      ) || [];
+
+    cart.push(cartItem);
+
+    localStorage.setItem(
+      "cart",
+      JSON.stringify(cart)
+    );
+
+    alert(
+      "Producto agregado al carrito 🛒"
+    );
+
+    navigate("/cart");
+
   };
-
-  const cart =
-    JSON.parse(
-      localStorage.getItem(
-        "cart"
-      )
-    ) || [];
-
-  cart.push(cartItem);
-
-  localStorage.setItem(
-    "cart",
-    JSON.stringify(cart)
-  );
-
-  alert(
-    "Producto agregado al carrito 🛒"
-  );
-
-  navigate("/cart");
-
-};
 
   return (
     <div
@@ -189,8 +197,7 @@ const ProductDetail = () => {
             }}
           >
             <label>
-              Selecciona tu
-              talla:
+              Selecciona tu talla:
             </label>
 
             <br />
