@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { API_URL } from "../config/api";
 
 const Login = () => {
+
+  const navigate = useNavigate();
 
   const [email, setEmail] =
     useState("");
@@ -54,8 +57,7 @@ const Login = () => {
         "Login exitoso 😎"
       );
 
-      window.location.href =
-        "/#/profile";
+      navigate("/profile");
 
     } catch (error) {
 

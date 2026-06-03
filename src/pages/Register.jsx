@@ -1,42 +1,78 @@
-import { API_URL } from "../config/api";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { API_URL } from "../config/api";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const [name, setName] =
+    useState("");
+
+  const [phone, setPhone] =
+    useState("");
+
+  const [email, setEmail] =
+    useState("");
+
+  const [password, setPassword] =
+    useState("");
 
   const handleRegister = async (e) => {
+
     e.preventDefault();
 
     try {
-      const response = await fetch(`${API_URL}/api/users/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          phone,
-          email,
-          password,
-        }),
-      });
 
-      const data = await response.json();
+      const response =
+        await fetch(
+          `${API_URL}/api/users/register`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+            body: JSON.stringify({
+              name,
+              phone,
+              email,
+              password,
+            }),
+          }
+        );
+
+      const data =
+        await response.json();
 
       if (response.ok) {
-        alert("Usuario registrado 😎");
-        window.location.href = "/#/login";
+
+        alert(
+          "Usuario registrado 😎"
+        );
+
+        navigate("/login");
+
       } else {
-        alert(data.error || "Error al registrar");
+
+        alert(
+          data.error ||
+          "Error al registrar"
+        );
+
       }
+
     } catch (error) {
+
       console.log(error);
-      alert("Error al registrar");
+
+      alert(
+        "Error al registrar"
+      );
+
     }
+
   };
 
   return (
@@ -60,12 +96,14 @@ const Register = () => {
         <form
           onSubmit={handleRegister}
           style={{
-            backgroundColor: "#1e1e1e",
+            backgroundColor:
+              "#1e1e1e",
             padding: "40px",
             borderRadius: "15px",
             width: "350px",
             display: "flex",
-            flexDirection: "column",
+            flexDirection:
+              "column",
             gap: "20px",
           }}
         >
@@ -75,31 +113,52 @@ const Register = () => {
             type="text"
             placeholder="Nombre"
             style={inputStyle}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) =>
+              setName(
+                e.target.value
+              )
+            }
           />
 
           <input
             type="text"
             placeholder="Teléfono"
             style={inputStyle}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) =>
+              setPhone(
+                e.target.value
+              )
+            }
           />
 
           <input
             type="email"
             placeholder="Email"
             style={inputStyle}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) =>
+              setEmail(
+                e.target.value
+              )
+            }
           />
 
           <input
             type="password"
             placeholder="Password"
             style={inputStyle}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) =>
+              setPassword(
+                e.target.value
+              )
+            }
           />
 
-          <button style={buttonStyle}>Crear cuenta</button>
+          <button
+            style={buttonStyle}
+          >
+            Crear cuenta
+          </button>
+
         </form>
       </div>
     </div>
