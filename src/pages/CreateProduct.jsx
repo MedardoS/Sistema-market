@@ -1,21 +1,72 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
+import { API_URL } from "../config/api";
 
 const CreateProduct = () => {
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
 
-  const handleSubmit = (e) => {
+  const [title, setTitle] =
+    useState("");
+
+  const [price, setPrice] =
+    useState("");
+
+  const [image, setImage] =
+    useState("");
+
+  const handleSubmit = async (e) => {
+
     e.preventDefault();
 
-    alert("Producto publicado correctamente 😎");
+    try {
 
-    console.log({
-      title,
-      price,
-      image,
-    });
+      const response =
+        await fetch(
+          `${API_URL}/api/products`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+            body: JSON.stringify({
+              title,
+              price,
+              image,
+            }),
+          }
+        );
+
+      const data =
+        await response.json();
+
+      if (!response.ok) {
+
+        alert(
+          data.error ||
+          "Error al crear producto"
+        );
+
+        return;
+      }
+
+      alert(
+        "Producto publicado correctamente 😎"
+      );
+
+      setTitle("");
+      setPrice("");
+      setImage("");
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert(
+        "Error al crear producto"
+      );
+
+    }
+
   };
 
   return (
@@ -54,7 +105,9 @@ const CreateProduct = () => {
             placeholder="Nombre del producto"
             value={title}
             onChange={(e) =>
-              setTitle(e.target.value)
+              setTitle(
+                e.target.value
+              )
             }
             style={inputStyle}
           />
@@ -64,7 +117,9 @@ const CreateProduct = () => {
             placeholder="Precio"
             value={price}
             onChange={(e) =>
-              setPrice(e.target.value)
+              setPrice(
+                e.target.value
+              )
             }
             style={inputStyle}
           />
@@ -74,7 +129,9 @@ const CreateProduct = () => {
             placeholder="URL de la imagen"
             value={image}
             onChange={(e) =>
-              setImage(e.target.value)
+              setImage(
+                e.target.value
+              )
             }
             style={inputStyle}
           />
@@ -85,6 +142,7 @@ const CreateProduct = () => {
           >
             Publicar producto
           </button>
+
         </form>
       </div>
     </div>
