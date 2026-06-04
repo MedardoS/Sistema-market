@@ -1,28 +1,20 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const token = localStorage.getItem("token");
 
-  const navigate = useNavigate();
-
-  const token =
-    localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
 
-    localStorage.removeItem(
-      "token"
-    );
+    localStorage.removeItem("role");
 
-    localStorage.removeItem(
-      "cart"
-    );
+    localStorage.removeItem("cart");
 
-    alert(
-      "Sesión cerrada correctamente"
-    );
+    alert("Sesión cerrada correctamente");
 
-    navigate("/login");
-
+    window.location.href = "/Sistema-market/#/login";
   };
 
   return (
@@ -50,42 +42,27 @@ const Navbar = () => {
           alignItems: "center",
         }}
       >
-        <Link
-          style={{ color: "white" }}
-          to="/"
-        >
+        <Link style={{ color: "white" }} to="/">
           Home
         </Link>
 
-        <Link
-          style={{ color: "white" }}
-          to="/gallery"
-        >
+        <Link style={{ color: "white" }} to="/gallery">
           Gallery
         </Link>
 
         {token && (
-          <Link
-            style={{ color: "white" }}
-            to="/cart"
-          >
+          <Link style={{ color: "white" }} to="/cart">
             🛒 Carrito
           </Link>
         )}
 
         {!token && (
           <>
-            <Link
-              style={{ color: "white" }}
-              to="/login"
-            >
+            <Link style={{ color: "white" }} to="/login">
               Login
             </Link>
 
-            <Link
-              style={{ color: "white" }}
-              to="/register"
-            >
+            <Link style={{ color: "white" }} to="/register">
               Register
             </Link>
           </>
@@ -93,32 +70,30 @@ const Navbar = () => {
 
         {token && (
           <>
-            <Link
-              style={{ color: "white" }}
-              to="/profile"
-            >
+            <Link style={{ color: "white" }} to="/profile">
               Profile
             </Link>
 
-            <Link
-              style={{ color: "white" }}
-              to="/orders"
-            >
+            <Link style={{ color: "white" }} to="/orders">
               Mis Compras
             </Link>
 
-            <Link
-              style={{ color: "white" }}
-              to="/create"
-            >
-              Crear Producto
-            </Link>
+            {role === "admin" && (
+              <Link style={{ color: "white" }} to="/create">
+                Crear Producto
+              </Link>
+            )}
+
+            {localStorage.getItem("role") === "admin" && (
+              <Link style={{ color: "white" }} to="/admin-products">
+                Admin
+              </Link>
+            )}
 
             <button
               onClick={handleLogout}
               style={{
-                backgroundColor:
-                  "#ff6600",
+                backgroundColor: "#ff6600",
                 color: "white",
                 border: "none",
                 padding: "8px 15px",

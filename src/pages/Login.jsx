@@ -4,71 +4,47 @@ import Navbar from "../components/Navbar";
 import { API_URL } from "../config/api";
 
 const Login = () => {
-
   const navigate = useNavigate();
 
-  const [email, setEmail] =
-    useState("");
+  const [email, setEmail] = useState("");
 
-  const [password, setPassword] =
-    useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
-
     e.preventDefault();
 
     try {
+      const response = await fetch(`${API_URL}/api/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-      const response =
-        await fetch(
-          `${API_URL}/api/users/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type":
-                "application/json",
-            },
-            body: JSON.stringify({
-              email,
-              password,
-            }),
-          }
-        );
-
-      const data =
-        await response.json();
+      const data = await response.json();
 
       if (!response.ok) {
-
-        alert(
-          data.error ||
-          "Error login"
-        );
+        alert(data.error || "Error login");
 
         return;
       }
 
-      localStorage.setItem(
-        "token",
-        data.token
-      );
+      localStorage.setItem("token", data.token);
 
-      alert(
-        "Login exitoso 😎"
-      );
+      localStorage.setItem("role", data.role);
+
+      alert("Login exitoso 😎");
 
       navigate("/profile");
-
     } catch (error) {
-
       console.log(error);
 
-      alert(
-        "Error login"
-      );
-
+      alert("Error login");
     }
-
   };
 
   return (
@@ -92,15 +68,12 @@ const Login = () => {
         <form
           onSubmit={handleLogin}
           style={{
-            backgroundColor:
-              "#1e1e1e",
+            backgroundColor: "#1e1e1e",
             padding: "40px",
-            borderRadius:
-              "15px",
+            borderRadius: "15px",
             width: "350px",
             display: "flex",
-            flexDirection:
-              "column",
+            flexDirection: "column",
             gap: "20px",
           }}
         >
@@ -110,30 +83,17 @@ const Login = () => {
             type="email"
             placeholder="Email"
             style={inputStyle}
-            onChange={(e) =>
-              setEmail(
-                e.target.value
-              )
-            }
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <input
             type="password"
             placeholder="Password"
             style={inputStyle}
-            onChange={(e) =>
-              setPassword(
-                e.target.value
-              )
-            }
+            onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button
-            style={buttonStyle}
-          >
-            Ingresar
-          </button>
-
+          <button style={buttonStyle}>Ingresar</button>
         </form>
       </div>
     </div>

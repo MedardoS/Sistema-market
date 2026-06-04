@@ -1,33 +1,50 @@
+import { useEffect, useState } from "react";
+
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 
+import { API_URL } from "../config/api";
+
 const Gallery = () => {
-  const products = [
-    {
-      id: 1,
-      title: "Polera Oversize Negra",
-      price: 19990,
-      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
-    },
-    {
-      id: 2,
-      title: "Chaqueta Urban Style",
-      price: 34990,
-      image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f",
-    },
-    {
-      id: 3,
-      title: "Jeans Slim Fit",
-      price: 24990,
-      image: "https://images.unsplash.com/photo-1542272604-787c3835535d",
-    },
-    {
-      id: 4,
-      title: "Zapatillas Urban",
-      price: 45990,
-      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
-    },
-  ];
+  const [products, setProducts] = useState([]);
+
+  const role = localStorage.getItem("role");
+
+  const isAdmin = role === "admin";
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/products`);
+
+      const data = await response.json();
+
+      setProducts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeactivate = async (id) => {
+    const confirmAction = window.confirm("¿Marcar producto como agotado?");
+
+    if (!confirmAction) return;
+
+    try {
+      await fetch(`${API_URL}/api/products/${id}/deactivate`, {
+        method: "PATCH",
+      });
+
+      alert("Producto marcado como agotado");
+
+      loadProducts();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div
@@ -52,7 +69,16 @@ const Gallery = () => {
         >
           Galería de Productos
         </h1>
-
+        {products.length === 0 && (
+          <h2
+            style={{
+              textAlign: "center",
+              color: "#ccc",
+            }}
+          >
+            No hay productos disponibles actualmente
+          </h2>
+        )}
         <div
           style={{
             display: "flex",
@@ -62,13 +88,33 @@ const Gallery = () => {
           }}
         >
           {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              id={product.id}
-              image={product.image}
-              title={product.title}
-              price={product.price}
-            />
+            <div key={product.id}>
+              <ProductCard
+                id={product.id}
+                image={product.image_url}
+                title={product.title}
+                price={product.price}
+                stock={product.stock}
+              />
+
+              {isAdmin && (
+                <button
+                  onClick={() => handleDeactivate(product.id)}
+                  style={{
+                    width: "100%",
+                    marginTop: "10px",
+                    padding: "10px",
+                    backgroundColor: "#cc0000",
+                    border: "none",
+                    color: "white",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Marcar Agotado
+                </button>
+              )}
+            </div>
           ))}
         </div>
       </div>

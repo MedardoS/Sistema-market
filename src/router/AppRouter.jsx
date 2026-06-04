@@ -9,8 +9,9 @@ import ProductDetail from "../pages/ProductDetail";
 import CreateProduct from "../pages/CreateProduct";
 import Cart from "../pages/Cart";
 import Orders from "../pages/Orders";
-
+import AdminProducts from "../pages/AdminProducts";
 import ProtectedRoute from "../components/ProtectedRoute";
+import AdminRoute from "../components/AdminRoute";
 
 const AppRouter = () => {
   return (
@@ -38,9 +39,9 @@ const AppRouter = () => {
         <Route
           path="/create"
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <CreateProduct />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
 
@@ -52,13 +53,22 @@ const AppRouter = () => {
             </ProtectedRoute>
           }
         />
-        
+
         <Route
           path="/orders"
           element={
             <ProtectedRoute>
               <Orders />
             </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin-products"
+          element={
+            <AdminRoute>
+              <AdminProducts />
+            </AdminRoute>
           }
         />
       </Routes>

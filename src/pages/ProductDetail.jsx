@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   useParams,
@@ -7,8 +7,9 @@ import {
 
 import Navbar from "../components/Navbar";
 
-const ProductDetail = () => {
+import { API_URL } from "../config/api";
 
+const ProductDetail = () => {
   const { id } =
     useParams();
 
@@ -18,58 +19,70 @@ const ProductDetail = () => {
   const [size, setSize] =
     useState("M");
 
-  const products = [
-    {
-      id: 1,
-      title:
-        "Polera Oversize Negra",
-      price: 19990,
-      image:
-        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
-    },
-    {
-      id: 2,
-      title:
-        "Chaqueta Urban Style",
-      price: 34990,
-      image:
-        "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f",
-    },
-    {
-      id: 3,
-      title:
-        "Jeans Slim Fit",
-      price: 24990,
-      image:
-        "https://images.unsplash.com/photo-1542272604-787c3835535d",
-    },
-    {
-      id: 4,
-      title:
-        "Zapatillas Urban",
-      price: 45990,
-      image:
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
-    },
-  ];
+  const [product, setProduct] =
+    useState(null);
 
-  const product =
-    products.find(
-      (p) =>
-        p.id === Number(id)
-    );
+  useEffect(() => {
+    loadProduct();
+  }, []);
+
+  const loadProduct =
+    async () => {
+      try {
+        const response =
+          await fetch(
+            `${API_URL}/api/products`
+          );
+
+        const data =
+          await response.json();
+
+        const found =
+          data.find(
+            (p) =>
+              p.id === Number(id)
+          );
+
+        setProduct(found);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   if (!product) {
-
     return (
-      <h1>
-        Producto no encontrado
-      </h1>
-    );
+      <div
+        style={{
+          minHeight: "100vh",
+          backgroundColor:
+            "#111",
+          color: "white",
+        }}
+      >
+        <Navbar />
 
+        <h1
+          style={{
+            textAlign:
+              "center",
+            marginTop:
+              "50px",
+          }}
+        >
+          Cargando producto...
+        </h1>
+      </div>
+    );
   }
 
   const handleBuy = () => {
+    if (!product.active) {
+      alert(
+        "Este producto está agotado"
+      );
+
+      return;
+    }
 
     const token =
       localStorage.getItem(
@@ -77,30 +90,28 @@ const ProductDetail = () => {
       );
 
     if (!token) {
-
       const register =
         window.confirm(
-          "Debes iniciar sesión para comprar. ¿Deseas registrarte?"
+          "Debes iniciar sesión para comprar."
         );
 
       if (register) {
-
         navigate("/register");
-
       } else {
-
         navigate("/login");
-
       }
 
       return;
     }
 
     const cartItem = {
+      id: product.id,
       title:
         product.title,
       price:
         product.price,
+      image:
+        product.image_url,
       size,
     };
 
@@ -123,7 +134,6 @@ const ProductDetail = () => {
     );
 
     navigate("/cart");
-
   };
 
   return (
@@ -147,21 +157,27 @@ const ProductDetail = () => {
       >
         <div
           style={{
-            maxWidth: "500px",
+            maxWidth: "600px",
             backgroundColor:
               "#1e1e1e",
             padding: "30px",
             borderRadius:
               "15px",
-            textAlign:
-              "center",
           }}
         >
           <img
-            src={product.image}
-            alt={product.title}
+            src={
+              product.image_url
+            }
+            alt={
+              product.title
+            }
             style={{
               width: "100%",
+              height:
+                "500px",
+              objectFit:
+                "cover",
               borderRadius:
                 "15px",
               marginBottom:
@@ -173,11 +189,6 @@ const ProductDetail = () => {
             {product.title}
           </h1>
 
-          <p>
-            Producto destacado
-            UrbanStyle.
-          </p>
-
           <h2
             style={{
               color:
@@ -185,8 +196,34 @@ const ProductDetail = () => {
             }}
           >
             $
-            {product.price.toLocaleString()}
+            {Number(
+              product.price
+            ).toLocaleString(
+              "es-CL"
+            )}
           </h2>
+
+          <p
+            style={{
+              color:
+                product.active
+                  ? "#2ecc71"
+                  : "#e74c3c",
+              fontWeight:
+                "bold",
+              marginTop:
+                "10px",
+            }}
+          >
+            {product.active
+              ? `Stock disponible: ${product.stock}`
+              : "⚠ Producto agotado"}
+          </p>
+
+          <p>
+            Producto disponible
+            en UrbanStyle.
+          </p>
 
           <div
             style={{
@@ -197,7 +234,7 @@ const ProductDetail = () => {
             }}
           >
             <label>
-              Selecciona tu talla:
+              Selecciona tu talla
             </label>
 
             <br />
@@ -239,24 +276,39 @@ const ProductDetail = () => {
           </div>
 
           <button
-            onClick={handleBuy}
+            onClick={
+              handleBuy
+            }
+            disabled={
+              !product.active
+            }
             style={{
+              width: "100%",
               padding:
-                "12px 20px",
-              backgroundColor:
-                "#ff6600",
+                "15px",
               border:
                 "none",
+              backgroundColor:
+                product.active
+                  ? "#ff6600"
+                  : "#666",
               color:
                 "white",
               borderRadius:
                 "10px",
               cursor:
-                "pointer",
-              width: "100%",
+                product.active
+                  ? "pointer"
+                  : "not-allowed",
+              fontSize:
+                "16px",
+              fontWeight:
+                "bold",
             }}
           >
-            Agregar al carrito 🛒
+            {product.active
+              ? "Agregar al carrito 🛒"
+              : "Producto agotado"}
           </button>
         </div>
       </div>

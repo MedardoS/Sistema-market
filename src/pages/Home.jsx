@@ -1,7 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Home = () => {
+
+  const navigate =
+    useNavigate();
+
   return (
     <div
       style={{
@@ -14,13 +20,7 @@ const Home = () => {
       }}
     >
 
-      {/* NAVBAR */}
-
       <Navbar />
-
-
-
-      {/* CONTENIDO */}
 
       <div
         style={{
@@ -47,6 +47,9 @@ const Home = () => {
         </p>
 
         <button
+          onClick={() =>
+            navigate("/gallery")
+          }
           style={{
             marginTop: "30px",
             padding: "15px 30px",
@@ -61,10 +64,6 @@ const Home = () => {
           Explorar productos
         </button>
       </div>
-
-
-
-      {/* FOOTER */}
 
       <Footer />
 
